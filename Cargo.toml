@@ -1,0 +1,14 @@
+[package]
+name = "kiwad_unpacker"
+authors = ["Phill030"]
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+binary_rw = { git = "https://github.com/Phill030/BinaryManagerV2.git" }
+ctrlc = "3.4.0"
+flate2 = "1.0.26"
+rayon = "1.7"
+
+# [profile.release]
+# debug = true
