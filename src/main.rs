@@ -9,7 +9,7 @@ fn main() {
     let exe_path = &args[0];
 
     if args.len() >= 2 && args.iter().skip(1).all(|a| a.ends_with(".wad")) {
-        println!("Unpacking. This may take a moment... ☕");
+        println!("Unpacking, This may take a moment... ☕");
 
         args.iter().skip(1).for_each(|arg| {
             let arg_path = PathBuf::from(arg);
