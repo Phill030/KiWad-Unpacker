@@ -9,6 +9,3 @@ binary_rw = { git = "https://github.com/Phill030/BinaryManagerV2.git" }
 ctrlc = "3.4.0"
 flate2 = "1.0.26"
 rayon = "1.7"
-
-# [profile.release]
-# debug = true
