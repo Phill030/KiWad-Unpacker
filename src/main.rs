@@ -5,6 +5,8 @@ mod Wad;
 use crate::Wad::WadRework;
 
 fn main() {
+    println!("\nTool made by Phill030");
+
     let args: Vec<String> = env::args().collect();
     let exe_path = &args[0];
 
@@ -35,9 +37,8 @@ fn main() {
     let (tx, rx) = channel();
 
     ctrlc::set_handler(move || tx.send(()).expect("Could not send signal on channel."))
-        .expect("Error setting Ctrl-C handler");
+        .expect("Error setting Ctrl+C handler");
 
-    println!("\nTool made by https://github.com/phill030");
     println!("Press CTRL+C to exit!");
     rx.recv().expect("Could not receive from channel.");
     println!("Exiting...");
