@@ -54,7 +54,7 @@ impl<'a> WadRework<'a> {
                 let zip_size = reader.read_u32()?;
                 let mut zip = reader.read_bool()?;
                 let crc = reader.read_u32()?;
-                let file_name = reader.read_big_string()?.to_string().replace("\x00", "");
+                let file_name = reader.read_big_string()?.to_string().replace('\x00', "");
 
                 // Some of them are falsely marked as zipped but aren't actually
                 if file_name.ends_with(".wav")
