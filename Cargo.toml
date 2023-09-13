@@ -5,7 +5,14 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-binary_rw = { git = "https://github.com/Phill030/BinaryManagerV2.git" }
+binary_modifier = "0.3.3"
 ctrlc = "3.4.0"
-flate2 = "1.0.26"
+flate2 = "1.0.27"
 rayon = "1.7"
+
+[dev-dependencies]
+criterion = "0.5.1"
+
+[[bench]]
+name = "unpacker_benchmark"
+harness = false
