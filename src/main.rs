@@ -1,12 +1,10 @@
 use std::{env, path::PathBuf, sync::mpsc::channel};
 
-mod Wad;
-
+pub mod Wad;
 use crate::Wad::WadRework;
 
 fn main() {
-    println!("\nTool made by Phill030");
-
+    // env_logger::Builder::filter_level(&mut Builder::new(), log::LevelFilter::Info).init();
     let args: Vec<String> = env::args().collect();
     let exe_path = &args[0];
 
@@ -23,15 +21,15 @@ fn main() {
                 .parent()
                 .unwrap()
                 .join("output")
-                .join(&arg_path.file_name().unwrap());
+                .join(arg_path.file_name().unwrap());
 
             wad.open_all_files(&mut save_path);
         });
 
-        println!("Done!")
+        println!("Done!");
     } else {
         eprintln!("No or incorrect file(s) provided. All imported files must have the .wad file extension!");
-        eprintln!("How to use: Drag one or multiple .wad files onto this executable.")
+        eprintln!("Usage: Drag one or multiple .wad files onto this executable.");
     }
 
     let (tx, rx) = channel();
