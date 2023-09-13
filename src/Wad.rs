@@ -1,11 +1,11 @@
-use binary_rw::{BinaryError, BinaryReader, Endian};
+use binary_modifier::{BinaryError, BinaryReader, Endian};
 use flate2::DecompressError;
 use rayon::prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 use std::{
     collections::HashMap,
     fs::{self, create_dir_all},
     io::{Cursor, Read},
-    path::PathBuf,
+    path::Path,
 };
 
 #[derive(Debug, Clone)]
@@ -27,19 +27,20 @@ pub struct WadRework<'a> {
 }
 
 impl<'a> WadRework<'a> {
+    /// #Panics
+    ///
+    /// Will panic if the file is not recognized as a KiWad file!
     pub fn new(buffer: &'a mut Vec<u8>) -> Result<Self, BinaryError> {
         let mut reader = BinaryReader::new_vec(buffer, Endian::Little);
 
         let header = &reader.read_bytes(5)?;
 
-        if !Self::is_magic_header(header) {
-            panic!("No valid KiWAD file was recognized!");
-        } else {
+        if Self::is_magic_header(header) {
             let version = reader.read_u32()?;
             let file_count = reader.read_u32()?;
 
-            println!("\tFileCount: {file_count}");
-            println!("\tVersion: {version}");
+            // println!("\tFileCount: {file_count}");
+            // println!("\tVersion: {version}");
 
             if version >= 2 {
                 reader.read_bytes(1)?;
@@ -60,7 +61,7 @@ impl<'a> WadRework<'a> {
                     || file_name.ends_with(".ogg")
                     || file_name.ends_with(".mp3")
                 {
-                    zip = false
+                    zip = false;
                 }
 
                 // Add the FileRecord to the HashMap with properties
@@ -78,15 +79,17 @@ impl<'a> WadRework<'a> {
             }
 
             Ok(Self {
+                version,
                 file_count,
                 files,
-                version,
                 buffer,
             })
+        } else {
+            panic!("No valid KiWAD file was recognized!");
         }
     }
 
-    pub fn open_all_files(&mut self, mut path: &mut PathBuf) -> () {
+    pub fn open_all_files(&mut self, path: &mut Path) {
         self.files
             .par_iter()
             .into_par_iter()
@@ -97,39 +100,45 @@ impl<'a> WadRework<'a> {
                 let data = {
                     let mut result = vec![
                         0;
-                        match file_record.zipped {
-                            true => file_record.zip_size,
-                            false => file_record.size,
+                        if file_record.zipped {
+                            file_record.zip_size
+                        } else {
+                            file_record.size
                         } as usize
                     ];
 
-                    cursor.set_position(file_record.offset as u64);
+                    cursor.set_position(u64::from(file_record.offset));
                     cursor.read_exact(&mut result).unwrap();
                     result
                 };
 
                 if file_record.zipped {
-                    if !Self::is_empty(&data) {
+                    if Self::is_empty(&data) {
+                        buffer.clear();
+                    } else {
                         let mut decompressor = flate2::Decompress::new(true);
                         decompressor
                             .decompress_vec(&data[..], &mut buffer, flate2::FlushDecompress::Finish)
                             .unwrap();
-                    } else {
-                        buffer.clear();
                     }
                 } else {
-                    buffer = data.to_vec();
+                    buffer = data.clone();
                 }
 
+                //? TODO: Maybe add tokio::spawn and make all this async ??
+
                 let path = &mut path.join(file_name);
-                create_dir_all(&path.parent().unwrap()).unwrap();
+                create_dir_all(path.parent().unwrap()).unwrap();
                 fs::write(&path, &buffer)
-                    .unwrap_or_else(|e| eprintln!("Could not write to file! {}", e)); // Write to the file
+                    .unwrap_or_else(|e| eprintln!("Could not write to file! {e}")); // Write to the file
 
                 buffer.clear();
             });
     }
 
+    /// #Panics
+    ///
+    /// Will panic if the name does not exist in the `HashMap`
     pub fn read_file(&mut self, name: &str) -> Result<Vec<u8>, DecompressError> {
         let file_record = self
             .files
@@ -142,41 +151,45 @@ impl<'a> WadRework<'a> {
         let data = {
             let mut result = vec![
                 0;
-                match file_record.zipped {
-                    true => file_record.zip_size,
-                    false => file_record.size,
+                if file_record.zipped {
+                    file_record.zip_size
+                } else {
+                    file_record.size
                 } as usize
             ];
 
-            cursor.set_position(file_record.offset as u64);
+            cursor.set_position(u64::from(file_record.offset));
             cursor.read_exact(&mut result).unwrap();
             result
         };
 
         if file_record.zipped {
-            if !Self::is_empty(&data) {
+            if Self::is_empty(&data) {
+                buffer.clear();
+            } else {
                 let mut decompressor = flate2::Decompress::new(true);
                 decompressor.decompress_vec(
                     &data[..],
                     &mut buffer,
                     flate2::FlushDecompress::Finish,
                 )?;
-            } else {
-                buffer.clear();
             }
         } else {
-            buffer = data.to_vec();
+            buffer = data.clone();
         }
 
         Ok(buffer)
     }
 
     /// Check if a `Vec<u8>` is the magic header `KIWAD`
+    #[inline]
     fn is_magic_header(input_bytes: &[u8]) -> bool {
         input_bytes == b"KIWAD"
     }
 
     /// Returns `true` if the Vec only contains NULL bytes (which are impossible to inflate) or len is 0
+    #[inline]
+    #[must_use]
     pub fn is_empty(slice: &[u8]) -> bool {
         slice.is_empty() || slice.iter().all(|&byte| byte == 0)
     }
