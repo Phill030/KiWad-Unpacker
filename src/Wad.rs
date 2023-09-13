@@ -27,9 +27,9 @@ pub struct WadRework<'a> {
 }
 
 impl<'a> WadRework<'a> {
-    /// #Panics
+    /// # Panics
     ///
-    /// Will panic if the file is not recognized as a KiWad file!
+    /// Will panic if the file doesn't contain a `KIWAD` header!
     pub fn new(buffer: &'a mut Vec<u8>) -> Result<Self, BinaryError> {
         let mut reader = BinaryReader::new_vec(buffer, Endian::Little);
 
