@@ -136,7 +136,7 @@ impl<'a> WadRework<'a> {
             });
     }
 
-    /// #Panics
+    /// # Panics
     ///
     /// Will panic if the name does not exist in the `HashMap`
     pub fn read_file(&mut self, name: &str) -> Result<Vec<u8>, DecompressError> {
