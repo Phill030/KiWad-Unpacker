@@ -85,7 +85,7 @@ impl<'a> WadRework<'a> {
                 buffer,
             })
         } else {
-            panic!("No valid KiWAD file was recognized!");
+            panic!("No valid KIWAD header was recognized!");
         }
     }
 
