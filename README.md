@@ -1,3 +1,6 @@
+<p align="center">
+  <img width="20%" src="https://github.com/Phill030/KiWad-Unpacker/assets/50775241/31904a6e-0026-4eb0-bcb5-0d65bf8f85a7"/>
+</p>
 <h1>
   <p align="center">
   KiWad-Unpacker
