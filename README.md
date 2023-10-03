@@ -3,7 +3,16 @@
 </p>
 <h1 align="center">KiWad-Unpacker</h1>
 
-### How to use
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Example](#example)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+This tool was made for the [Revive101 Community](https://discord.gg/sMFgyNRDDM), a *(soon)* free2play revival of Wizard101!
+
+## Usage
 There are 2 ways to use this tool:
 1. Drag one or more `.wad` files onto the executable
 2. Start the executable with arguments like
@@ -16,18 +25,14 @@ There are 2 ways to use this tool:
    ```
 Unpacked files will appear in a output/NAME.wad folder located in the executable directory
 <br>
-<br>
 
-**‼ IMPORTANT ‼** Windows Defender is overreacting when using this! The CPU usage may rise to 100% because of Windows Defender scanning and analyzing <u>every single</u> file. Please create an exception for your folder in order for the tool to work perfectly.
+<h4>‼ IMPORTANT ‼</h4> Windows Defender is overreacting when using this! The CPU usage may rise to 100% because of Windows Defender scanning and analyzing <u>every single</u> file. Please create an exception for your folder in order for the tool to work perfectly.
 
-### Example
-https://youtu.be/gTVdtxpe6hs
+## Example
+Watch [this video](https://youtu.be/gTVdtxpe6hs) to see how it works.
 
-### Contribute
-If you found a bug or want to improve anything, don't hesitate to open up a pull request!
+## Contributing
+We welcome contributions from the community to make KiWad-Unpacker even better. If you have ideas for improvements or want to report issues, please feel free to open an issue or submit a pull request.
 
-### Info
-This tool was made for the [Revive101 Community](https://discord.gg/sMFgyNRDDM), a *(soon)* free2play revival of Wizard101!
-
-### License
+## License
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Phill030/KiWad-Unpacker">KiWad-Unpacker</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/Phill030/">Phill030</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
