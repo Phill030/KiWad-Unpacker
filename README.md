@@ -26,7 +26,7 @@ There are 2 ways to use this tool:
 Unpacked files will appear in a output/NAME.wad folder located in the executable directory
 <br>
 
-<h4>‼ IMPORTANT ‼</h4> Windows Defender is overreacting when using this! The CPU usage may rise to 100% because of Windows Defender scanning and analyzing <u>every single</u> file. Please create an exception for your folder in order for the tool to work perfectly.
+<h4>‼ IMPORTANT ‼</h4> Windows Defender can be quite sensitive when it comes to using this tool. It might cause the CPU usage to spike up to 100% as Windows Defender scans and analyzes every single file. To ensure smooth operation, consider creating an exception for the tool's folder.
 
 ## Example
 Watch [this video](https://youtu.be/gTVdtxpe6hs) to see how it works.
