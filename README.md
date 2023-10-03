@@ -2,6 +2,7 @@
   <img width="20%" src="https://github.com/Phill030/KiWad-Unpacker/assets/50775241/31904a6e-0026-4eb0-bcb5-0d65bf8f85a7"/>
 </p>
 <h1 align="center">KiWad-Unpacker</h1>
+<h4 align="center"><b>Disclaimer:</b> This project is not affiliated with Wizard101Rewritten in any way! <a href="https://discord.gg/sMFgyNRDDM">Discord invite</a></h4> 
 
 - [Getting Started](#getting-started)
 - [Usage](#usage)
