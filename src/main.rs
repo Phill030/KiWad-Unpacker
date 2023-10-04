@@ -1,7 +1,7 @@
 use std::{env, path::PathBuf, sync::mpsc::channel};
 
-pub mod Wad;
-use crate::Wad::WadRework;
+pub mod wad;
+use crate::wad::WadRework;
 
 fn main() {
     // env_logger::Builder::filter_level(&mut Builder::new(), log::LevelFilter::Info).init();
