@@ -1,6 +1,6 @@
 use binary_modifier::{BinaryError, BinaryReader, Endian};
 use flate2::DecompressError;
-use rayon::prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
+use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::{
     collections::HashMap,
     fs::{self, create_dir_all},
@@ -90,50 +90,46 @@ impl<'a> WadRework<'a> {
     }
 
     pub fn open_all_files(&mut self, path: &mut Path) {
-        self.files
-            .par_iter()
-            .into_par_iter()
-            .for_each(|(file_name, file_record)| {
-                let mut buffer: Vec<u8> = Vec::with_capacity(file_record.size as usize);
-                let mut cursor: Cursor<&&mut [u8]> = Cursor::new(&self.buffer);
+        self.files.par_iter().for_each(|(file_name, file_record)| {
+            let mut buffer: Vec<u8> = Vec::with_capacity(file_record.size as usize);
+            let mut cursor: Cursor<&&mut [u8]> = Cursor::new(&self.buffer);
 
-                let data = {
-                    let mut result = vec![
-                        0;
-                        if file_record.zipped {
-                            file_record.zip_size
-                        } else {
-                            file_record.size
-                        } as usize
-                    ];
-
-                    cursor.set_position(u64::from(file_record.offset));
-                    cursor.read_exact(&mut result).unwrap();
-                    result
-                };
-
-                if file_record.zipped {
-                    if Self::is_empty(&data) {
-                        buffer.clear();
+            let data = {
+                let mut result = vec![
+                    0;
+                    if file_record.zipped {
+                        file_record.zip_size
                     } else {
-                        let mut decompressor = flate2::Decompress::new(true);
-                        decompressor
-                            .decompress_vec(&data[..], &mut buffer, flate2::FlushDecompress::Finish)
-                            .unwrap();
-                    }
+                        file_record.size
+                    } as usize
+                ];
+
+                cursor.set_position(u64::from(file_record.offset));
+                cursor.read_exact(&mut result).unwrap();
+                result
+            };
+
+            if file_record.zipped {
+                if Self::is_empty(&data) {
+                    buffer.clear();
                 } else {
-                    buffer = data.clone();
+                    let mut decompressor = flate2::Decompress::new(true);
+                    decompressor
+                        .decompress_vec(&data[..], &mut buffer, flate2::FlushDecompress::Finish)
+                        .unwrap();
                 }
+            } else {
+                buffer = data.clone();
+            }
 
-                //? TODO: Maybe add tokio::spawn and make all this async ??
+            //? TODO: Maybe add tokio::spawn and make all this async ??
 
-                let path = &mut path.join(file_name);
-                create_dir_all(path.parent().unwrap()).unwrap();
-                fs::write(&path, &buffer)
-                    .unwrap_or_else(|e| eprintln!("Could not write to file! {e}")); // Write to the file
+            let path = &mut path.join(file_name);
+            create_dir_all(path.parent().unwrap()).unwrap();
+            fs::write(&path, &buffer).unwrap_or_else(|e| eprintln!("Could not write to file! {e}")); // Write to the file
 
-                buffer.clear();
-            });
+            buffer.clear();
+        });
     }
 
     /// # Panics
