@@ -52,7 +52,7 @@ jobs:
           generate_release_notes: true
           prerelease: false
           files: |
-            build-linux/target/x86_64-unknown-linux-gnu/release/kiwad_unpacker
-            build-windows/target/x86_64-pc-windows-msvc/release/kiwad_unpacker.exe
+            /home/runner/work/KiWad-Unpacker/KiWad-Unpacker/target/x86_64-unknown-linux-gnu/release/kiwad_unpacker
+            D:/a/KiWad-Unpacker/KiWad-Unpacker/target/x86_64-pc-windows-msvc/release/kiwad_unpacker.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
