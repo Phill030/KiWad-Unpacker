@@ -10,14 +10,12 @@ jobs:
         target:
           - x86_64-unknown-linux-gnu
     steps:
-      - name: Checkout code
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-          override: true     
-      - name: Build project
+          override: true
       - uses: actions-rs/cargo@v1
         with:
           use-cross: true
@@ -31,14 +29,12 @@ jobs:
         target:
           - x86_64-pc-windows-msvc
     steps:
-      - name: Checkout code
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
-      - name: Build project
       - uses: actions-rs/cargo@v1
         with:
           use-cross: true
@@ -49,9 +45,7 @@ jobs:
     needs: [build-linux, build-windows]
     runs-on: ubuntu-latest
     steps:
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v1
         with:
           files: |
             build-linux/target/release/kiwad_unpacker
