@@ -2,7 +2,7 @@ name: deploy-release-cross-compile
 
 on:
   push:
-    branches: ["main"]
+    branches: ["ci/cd"]
 
 jobs:
   deploy:
