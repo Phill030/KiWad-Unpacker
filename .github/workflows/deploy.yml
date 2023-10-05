@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-executable
-          path: /home/runner/work/KiWad-Unpacker/KiWad-Unpacker/target/release/kiwad_unpacker
+          path: /project/target/release/kiwad_unpacker
       
   build-windows:
     runs-on: windows-latest
