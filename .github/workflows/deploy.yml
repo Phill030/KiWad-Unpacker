@@ -16,8 +16,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-          override: true
-          
+          override: true     
       - name: Build project
       - uses: actions-rs/cargo@v1
         with:
@@ -39,7 +38,6 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
-          
       - name: Build project
       - uses: actions-rs/cargo@v1
         with:
@@ -47,4 +45,16 @@ jobs:
           command: build
           args: --release --target=${{ matrix.target }}
 
-
+  release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build-linux/target/release/kiwad_unpacker
+            build-windows/target/release/kiwad_unpacker.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
