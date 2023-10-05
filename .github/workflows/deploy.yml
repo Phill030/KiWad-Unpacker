@@ -1,6 +1,6 @@
 name: deploy-release-cross-compile
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   deploy:
