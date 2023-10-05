@@ -57,12 +57,12 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: linux-executable
-          path: /tmp/linux-executable
+          path: /tmp/kiwad_unpacker
 
       - uses: actions/download-artifact@v2
         with:
           name: windows-executable
-          path: /tmp/windows-executable.exe
+          path: /tmp/kiwad_unpacker.exe
 
       - name: Create release
         uses: softprops/action-gh-release@v1
@@ -72,7 +72,7 @@ jobs:
           generate_release_notes: true
           prerelease: false
           files: |
-            /tmp/linux-executable
-            /tmp/windows-executable.exe
+            /tmp/kiwad_unpacker
+            /tmp/kiwad_unpacker.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
