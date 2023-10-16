@@ -21,14 +21,10 @@ jobs:
           use-cross: true
           command: build
           args: --release --verbose --target=${{ matrix.target }} --package kiwad_unpacker --bins --target-dir ./build
-      - name: Show current dir
-        run: ls -al ./
-      - name: Show current dir
-        run: ls -al ./build/${{ matrix.target }}/release
       - uses: actions/upload-artifact@v2
         with:
-          name: kiwad_unpacker
-          path: ./build/release/kiwad_unpacker
+          name: linux-executable
+          path: ./build/${{ matrix.target }}/release/kiwad_unpacker
           if-no-files-found: error
       
   build-windows:
@@ -48,11 +44,11 @@ jobs:
         with:
           use-cross: true
           command: build
-          args: --release --verbose --target=${{ matrix.target }} --target-dir ./build
+          args: --release --verbose --target=${{ matrix.target }} --package kiwad_unpacker --bins --target-dir ./build
       - uses: actions/upload-artifact@v2
         with:
           name: windows-executable
-          path: ./build/release/kiwad_unpacker.exe
+          path: ./build/${{ matrix.target }}/release/kiwad_unpacker
           if-no-files-found: error
 
   release:
@@ -62,7 +58,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: kiwad_unpacker
+          name: linux-executable
           path: /tmp/kiwad_unpacker
 
       - uses: actions/download-artifact@v2
