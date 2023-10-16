@@ -22,7 +22,7 @@ jobs:
           command: build
           args: --release --verbose --target=${{ matrix.target }} --bins --target-dir ./build
       - name: Show current dir
-        run: ls -al ./build/release
+        run: ls -al ./
       - uses: actions/upload-artifact@v2
         with:
           name: kiwad_unpacker
