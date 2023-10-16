@@ -27,6 +27,7 @@ jobs:
         with:
           name: linux-executable
           path: ./build/release/kiwad_unpacker
+          if-no-files-found: error
       
   build-windows:
     runs-on: windows-latest
@@ -50,6 +51,7 @@ jobs:
         with:
           name: windows-executable
           path: ./build/release/kiwad_unpacker.exe
+          if-no-files-found: error
 
   release:
     needs: [build-linux, build-windows]
