@@ -24,7 +24,7 @@ jobs:
       - name: Show current dir
         run: ls -al ./
       - name: Show current dir
-        run: ls -al ./build/release
+        run: ls -al ./build/${{ matrix.target }}/release
       - uses: actions/upload-artifact@v2
         with:
           name: kiwad_unpacker
