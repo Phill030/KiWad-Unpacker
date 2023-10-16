@@ -45,10 +45,18 @@ jobs:
           use-cross: true
           command: build
           args: --release --verbose --target=${{ matrix.target }} --package kiwad_unpacker --bins --target-dir ./build
+      - name: Log current dir
+        run: dir .\
+      - name: Log current dir 2
+        run: dir .\build
+      - name: Log current dir 3
+        run: dir .\build\${{ matrix.target }}
+      - name: Log current dir 4
+        run: dir .\build\${{ matrix.target }}\release
       - uses: actions/upload-artifact@v2
         with:
           name: windows-executable
-          path: .\build\${{ matrix.target }}\release\kiwad_unpacker
+          path: .\build\${{ matrix.target }}\release\kiwad_unpacker.exe
           if-no-files-found: error
 
   release:
