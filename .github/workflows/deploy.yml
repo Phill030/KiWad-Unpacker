@@ -22,11 +22,11 @@ jobs:
           command: build
           args: --release --verbose --target=${{ matrix.target }} --target-dir ./build
       - name: Show current dir
-        run: ls -al
+        run: ls -al ./release
       - uses: actions/upload-artifact@v2
         with:
           name: kiwad_unpacker
-          path: ./build/release/kiwad_unpacker
+          path: ./build/release/kiwad_unpacker.d
           if-no-files-found: error
       
   build-windows:
