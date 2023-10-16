@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-executable
-          path: ./build/target/release/kiwad_unpacker
+          path: ./build/release/kiwad_unpacker
       
   build-windows:
     runs-on: windows-latest
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: windows-executable
-          path: ./build/target/release/kiwad_unpacker.exe
+          path: ./build/release/kiwad_unpacker.exe
 
   release:
     needs: [build-linux, build-windows]
