@@ -21,6 +21,8 @@ jobs:
           use-cross: true
           command: build
           args: --release --verbose --target=${{ matrix.target }} --target-dir ./build
+      - name: Show current dir
+        run: ls -al
       - uses: actions/upload-artifact@v2
         with:
           name: linux-executable
@@ -44,8 +46,6 @@ jobs:
           use-cross: true
           command: build
           args: --release --verbose --target=${{ matrix.target }} --target-dir ./build
-      - name: Show current dir
-        run: ls -al
       - uses: actions/upload-artifact@v2
         with:
           name: windows-executable
