@@ -60,6 +60,8 @@ jobs:
       - uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
         run: ls -al
+      - name: Display structure of downloaded files 2
+        run: ls -al linux-executable/
       - uses: actions/download-artifact@v2
         with:
           name: linux-executable
