@@ -48,7 +48,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: windows-executable
-          path: ./build/${{ matrix.target }}/release/kiwad_unpacker
+          path: .\build\${{ matrix.target }}\release\kiwad_unpacker
           if-no-files-found: error
 
   release:
