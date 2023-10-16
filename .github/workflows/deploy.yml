@@ -20,7 +20,7 @@ jobs:
         with:
           use-cross: true
           command: build
-          args: --release --verbose --target=${{ matrix.target }} --bin kiwad_unpacker --target-dir ./build
+          args: --release --verbose --target=${{ matrix.target }} --bins --target-dir ./build
       - name: Show current dir
         run: ls -al ./build/release
       - uses: actions/upload-artifact@v2
