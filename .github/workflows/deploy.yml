@@ -25,7 +25,7 @@ jobs:
         run: ls -al
       - uses: actions/upload-artifact@v2
         with:
-          name: linux-executable
+          name: kiwad_unpacker
           path: ./build/release/kiwad_unpacker
           if-no-files-found: error
       
@@ -60,7 +60,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: linux-executable
+          name: kiwad_unpacker
           path: /tmp/kiwad_unpacker
 
       - uses: actions/download-artifact@v2
