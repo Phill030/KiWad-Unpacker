@@ -91,8 +91,8 @@ impl<'a> WadRework<'a> {
 
     pub fn open_all_files(&mut self, path: &mut Path) {
         self.files.par_iter().for_each(|(file_name, file_record)| {
-            let mut buffer: Vec<u8> = Vec::with_capacity(file_record.size as usize);
-            let mut cursor: Cursor<&&mut [u8]> = Cursor::new(&self.buffer);
+            let mut buffer = Vec::with_capacity(file_record.size as usize);
+            let mut cursor = Cursor::new(&self.buffer);
 
             let data = {
                 let mut result = vec![
