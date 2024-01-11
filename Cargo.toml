@@ -6,9 +6,10 @@ edition = "2021"
 
 [dependencies]
 binary_modifier = "0.3.3"
-ctrlc = "3.4.1"
+ctrlc = "3.4.2"
 flate2 = "1.0.28"
 rayon = "1.8.0"
+thiserror = "1.0.56"
 
 # [dev-dependencies]
 # criterion = "0.5.1"
