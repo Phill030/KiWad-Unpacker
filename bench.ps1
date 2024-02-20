@@ -1,0 +1,1 @@
+hyperfine --prepare 'if exist "D:\Phill030.de\Rust\KiWad-Unpacker\target\release\output" rmdir /s /q "D:\Phill030.de\Rust\KiWad-Unpacker\target\release\output"' 'D:\Phill030.de\Rust\KiWad-Unpacker\target\release\kiwad_unpacker.exe C:\Users\pmsal\Desktop\CSR.wad'
