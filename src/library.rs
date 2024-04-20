@@ -31,7 +31,6 @@ impl<'a> Library<'a> {
     /// Will panic if the file doesn't contain a `KIWAD` header!
     pub fn new(buffer: &'a mut Vec<u8>) -> Result<Self, BinaryError> {
         let mut reader = BinaryReader::new_vec(buffer, Endian::Little);
-
         let header = &reader.read_bytes(5)?;
 
         if Self::is_magic_header(header) {
@@ -112,7 +111,7 @@ impl<'a> Library<'a> {
                         .unwrap();
                 }
             } else {
-                buffer = data.clone();
+                buffer = data
             }
 
             let path = &mut path.join(&file_record.file_name);
