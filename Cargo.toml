@@ -9,10 +9,3 @@ binary_modifier = "0.3.3"
 flate2 = "1.0.28"
 rayon = "1.10.0"
 thiserror = "1.0.59"
-
-# [dev-dependencies]
-# criterion = "0.5.1"
-
-# [[bench]]
-# name = "unpacker_benchmark"
-# harness = false
