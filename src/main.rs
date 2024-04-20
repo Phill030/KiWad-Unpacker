@@ -30,11 +30,4 @@ fn main() {
         eprintln!("No or incorrect file(s) provided. All imported files must have the .wad file extension!");
         eprintln!("Usage: Drag one or multiple .wad files onto this executable.");
     }
-
-    let (tx, rx) = channel();
-    ctrlc::set_handler(move || tx.send(()).expect("Could not send signal on channel.")).expect("Error setting Ctrl+C handler");
-
-    println!("Press CTRL+C to exit!");
-    rx.recv().expect("Could not receive from channel.");
-    println!("Exiting...");
 }
