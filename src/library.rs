@@ -50,13 +50,13 @@ impl<'a> Library<'a> {
                 let offset = reader.read_u32()?;
                 let size = reader.read_u32()?;
                 let zip_size = reader.read_u32()?;
-                let mut zip = reader.read_bool()?;
+                let mut zipped = reader.read_bool()?;
                 let crc = reader.read_u32()?;
                 let file_name = reader.read_big_string()?.to_string().replace('\x00', "");
 
                 // Some of them are falsely marked as zipped but aren't actually
                 if file_name.ends_with(".wav") || file_name.ends_with(".ogg") || file_name.ends_with(".mp3") {
-                    zip = false;
+                    zipped = false;
                 }
 
                 // Add the FileRecord to the HashMap with properties
@@ -64,7 +64,7 @@ impl<'a> Library<'a> {
                     zip_size,
                     crc32: crc,
                     file_name,
-                    zipped: zip,
+                    zipped,
                     offset,
                     size,
                 });
