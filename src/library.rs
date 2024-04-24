@@ -116,9 +116,8 @@ impl<'a> Library<'a> {
 
             let path = &mut path.join(&file_record.file_name);
             create_dir_all(path.parent().unwrap()).unwrap();
-            fs::write(&path, &buffer).unwrap_or_else(|e| eprintln!("Could not write to file! {e}")); // Write to the file
-
-            buffer.clear();
+            fs::write(&path, &buffer).unwrap_or_else(|e| eprintln!("Could not write to file! {e}"));
+            // Write to the file
         });
     }
 
