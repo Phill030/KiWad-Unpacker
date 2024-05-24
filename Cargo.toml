@@ -6,6 +6,6 @@ edition = "2021"
 
 [dependencies]
 binary_modifier = "0.3.3"
-flate2 = "1.0.28"
+flate2 = "1.0.30"
 rayon = "1.10.0"
-thiserror = "1.0.59"
+thiserror = "1.0.61"
