@@ -2,8 +2,8 @@ use binary_modifier::{BinaryError, BinaryReader, Endian};
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::{
     collections::VecDeque,
-    fs::{create_dir_all, OpenOptions},
-    io::{Cursor, Read, Write},
+    fs::{create_dir_all, File},
+    io::{BufWriter, Cursor, Read, Write},
     path::PathBuf,
 };
 
@@ -115,14 +115,11 @@ impl<'a> Library<'a> {
             }
 
             // Prepare the file path
-            let mut file_path = path.clone();
-            file_path.push(&file_record.file_name);
+            let path = path.join(&file_record.file_name);
+            create_dir_all(path.parent().unwrap()).unwrap();
 
-            create_dir_all(file_path.parent().unwrap()).unwrap();
-
-            let mut file = OpenOptions::new().write(true).create(true).open(&file_path).unwrap();
-            file.write_all(&buffer)
-                .unwrap_or_else(|e| eprintln!("Could not write to file! {e}"));
+            let mut file = BufWriter::new(File::create(&path).unwrap());
+            file.write_all(&buffer).unwrap();
             // Write to the file
         });
     }
