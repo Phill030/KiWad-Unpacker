@@ -25,6 +25,8 @@ pub struct Library<'a> {
     pub buffer: &'a mut [u8],
 }
 
+const MAGIC_HEADER: &[u8; 5] = b"KIWAD";
+
 impl<'a> Library<'a> {
     /// # Panics
     ///
@@ -127,7 +129,7 @@ impl<'a> Library<'a> {
     /// Check if a `Vec<u8>` is the magic header `KIWAD`
     #[inline]
     fn is_magic_header(input_bytes: &[u8]) -> bool {
-        input_bytes == b"KIWAD"
+        input_bytes == MAGIC_HEADER
     }
 
     /// Returns `true` if the Vec only contains NULL bytes (which are impossible to inflate) or len is 0
