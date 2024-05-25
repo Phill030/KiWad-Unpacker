@@ -39,9 +39,6 @@ impl<'a> Library<'a> {
             let version = reader.read_u32()?;
             let file_count = reader.read_u32()?;
 
-            // println!("\tFileCount: {file_count}");
-            // println!("\tVersion: {version}");
-
             if version >= 2 {
                 reader.read_bytes(1)?;
             }
@@ -72,6 +69,8 @@ impl<'a> Library<'a> {
                 });
             }
 
+            println!("\tFound {file_count} files in WAD, version {version}!");
+
             Ok(Self {
                 version,
                 file_count,
@@ -79,7 +78,7 @@ impl<'a> Library<'a> {
                 buffer,
             })
         } else {
-            panic!("No valid KIWAD header was recognized!");
+            panic!("No valid KIWAD header recognized!");
         }
     }
 

@@ -22,12 +22,13 @@ fn main() {
                 .join("output")
                 .join(arg_path.file_name().unwrap());
 
+            println!("Extracting files...");
             wad.open_all_files(&mut save_path);
         });
 
         println!("Done!");
     } else {
-        eprintln!("No or incorrect file(s) provided. All imported files must have the .wad file extension!");
+        eprintln!("No or incorrect file(s) provided. All imported files must have a .wad file extension!");
         eprintln!("Usage: Drag one or multiple .wad files onto this executable.");
     }
 }
