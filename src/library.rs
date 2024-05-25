@@ -44,7 +44,7 @@ impl<'a> Library<'a> {
                 reader.read_bytes(1)?;
             }
 
-            let mut files: VecDeque<LibraryRecord> = VecDeque::new();
+            let mut files: VecDeque<LibraryRecord> = VecDeque::with_capacity(file_count as usize);
 
             for _ in 0..file_count {
                 let offset = reader.read_u32()?;
