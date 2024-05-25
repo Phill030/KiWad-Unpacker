@@ -2,9 +2,9 @@ use binary_modifier::{BinaryError, BinaryReader, Endian};
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::{
     collections::VecDeque,
-    fs::{self, create_dir_all},
-    io::{Cursor, Read},
-    path::Path,
+    fs::{create_dir_all, OpenOptions},
+    io::{Cursor, Read, Write},
+    path::PathBuf,
 };
 
 #[derive(Debug, Clone)]
@@ -81,7 +81,7 @@ impl<'a> Library<'a> {
         }
     }
 
-    pub fn open_all_files(&mut self, path: &mut Path) {
+    pub fn open_all_files(&mut self, path: &mut PathBuf) {
         self.files.par_iter().for_each(|file_record| {
             let mut buffer = Vec::with_capacity(file_record.size as usize);
             let mut cursor = Cursor::new(&self.buffer);
@@ -114,9 +114,15 @@ impl<'a> Library<'a> {
                 buffer = data
             }
 
-            let path = &mut path.join(&file_record.file_name);
-            create_dir_all(path.parent().unwrap()).unwrap();
-            fs::write(&path, &buffer).unwrap_or_else(|e| eprintln!("Could not write to file! {e}"));
+            // Prepare the file path
+            let mut file_path = path.clone();
+            file_path.push(&file_record.file_name);
+
+            create_dir_all(file_path.parent().unwrap()).unwrap();
+
+            let mut file = OpenOptions::new().write(true).create(true).open(&file_path).unwrap();
+            file.write_all(&buffer)
+                .unwrap_or_else(|e| eprintln!("Could not write to file! {e}"));
             // Write to the file
         });
     }
