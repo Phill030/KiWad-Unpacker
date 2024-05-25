@@ -119,9 +119,9 @@ impl<'a> Library<'a> {
             let path = path.join(&file_record.file_name);
             create_dir_all(path.parent().unwrap()).unwrap();
 
+            // Write to the file
             let mut file = BufWriter::new(File::create(&path).unwrap());
             file.write_all(&buffer).unwrap();
-            // Write to the file
         });
     }
 
