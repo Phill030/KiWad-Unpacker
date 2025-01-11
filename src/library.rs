@@ -1,7 +1,6 @@
 use binary_modifier::{BinaryError, BinaryReader, Endian};
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::{
-    collections::VecDeque,
     fs::{create_dir_all, File},
     io::{BufWriter, Cursor, Read, Write},
     path::PathBuf,
@@ -21,7 +20,7 @@ pub struct LibraryRecord {
 pub struct Library<'a> {
     pub version: u32,
     pub file_count: u32,
-    pub files: VecDeque<LibraryRecord>,
+    pub files: Vec<LibraryRecord>,
     pub buffer: &'a mut [u8],
 }
 
@@ -43,14 +42,14 @@ impl<'a> Library<'a> {
                 reader.read_bytes(1)?;
             }
 
-            let mut files: VecDeque<LibraryRecord> = VecDeque::with_capacity(file_count as usize);
+            let mut files: Vec<LibraryRecord> = Vec::with_capacity(file_count as usize);
 
             for _ in 0..file_count {
                 let offset = reader.read_u32()?;
                 let size = reader.read_u32()?;
                 let zip_size = reader.read_u32()?;
                 let mut zipped = reader.read_bool()?;
-                let crc = reader.read_u32()?;
+                let crc32 = reader.read_u32()?;
                 let file_name = reader.read_big_string()?.to_string().replace('\x00', "");
 
                 // Some of them are falsely marked as zipped but aren't actually
@@ -59,9 +58,9 @@ impl<'a> Library<'a> {
                 }
 
                 // Add the FileRecord to the HashMap with properties
-                files.push_back(LibraryRecord {
+                files.push(LibraryRecord {
                     zip_size,
-                    crc32: crc,
+                    crc32,
                     file_name,
                     zipped,
                     offset,
