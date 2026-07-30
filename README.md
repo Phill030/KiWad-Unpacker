@@ -28,16 +28,13 @@ There are multiple ways to use this tool:
    ./kiwad_unpacker ./file.wad ../../wads/files.wad
    ```
 3. Extract only specific files
-
-```shell
-./kiwad_unpacker ./file.wad csrconfig.xml
-```
-
-or
-
-```shell
-./kiwad_unpacker ./file.wad csrconfig.xml ./some_other_file.wad something.txt something_else.html
-```
+   ```shell
+   ./kiwad_unpacker ./file.wad csrconfig.xml
+   ```
+   or
+   ```shell
+   ./kiwad_unpacker ./file.wad csrconfig.xml ./some_other_file.wad something.txt something_else.html
+   ```
 
 <sub>This will extract <code>csrconfig.xml</code> from <code>file.wad</code> and <code>something.txt</code> & <code>something_else.html</code> from <code>some_other_file.wad</code></sub>
 
